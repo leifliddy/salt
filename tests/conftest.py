@@ -871,7 +871,7 @@ def salt_sub_minion_config(request, salt_factories, salt_master_config):
     return salt_factories.configure_minion(request, "sub_minion", master_id="master")
 
 
-def pytest_saltfactories_generate_default_master_configuration(
+def pytest_saltfactories_master_configuration_defaults(
     request, factories_manager, root_dir, master_id, order_masters
 ):
     """
@@ -926,7 +926,7 @@ def pytest_saltfactories_generate_default_master_configuration(
 
 
 def pytest_saltfactories_master_configuration_overrides(
-    request, factories_manager, root_dir, master_id, default_options, order_masters
+    request, factories_manager, root_dir, master_id, config_defaults, order_masters
 ):
     """
     Hook which should return a dictionary tailored for the provided master_id.
@@ -1021,7 +1021,7 @@ def pytest_saltfactories_master_configuration_overrides(
     return opts
 
 
-def pytest_saltfactories_generate_default_minion_configuration(
+def pytest_saltfactories_minion_configuration_defaults(
     request, factories_manager, root_dir, minion_id, master_port
 ):
     """
@@ -1060,7 +1060,7 @@ def pytest_saltfactories_generate_default_minion_configuration(
 
 
 def pytest_saltfactories_minion_configuration_overrides(
-    request, factories_manager, root_dir, minion_id, default_options
+    request, factories_manager, root_dir, minion_id, config_defaults
 ):
     """
     Hook which should return a dictionary tailored for the provided minion_id.
@@ -1112,7 +1112,7 @@ def pytest_saltfactories_minion_configuration_overrides(
 
 
 @pytest.hookspec(firstresult=True)
-def pytest_saltfactories_generate_default_syndic_configuration(
+def pytest_saltfactories_syndic_configuration_defaults(
     request, factories_manager, root_dir, syndic_id, syndic_master_port
 ):
     """
@@ -1140,7 +1140,7 @@ def pytest_saltfactories_generate_default_syndic_configuration(
 
 @pytest.hookspec(firstresult=True)
 def pytest_saltfactories_syndic_configuration_overrides(
-    request, factories_manager, syndic_id, default_options
+    request, factories_manager, syndic_id, config_defaults
 ):
     """
     Hook which should return a dictionary tailored for the provided syndic_id.

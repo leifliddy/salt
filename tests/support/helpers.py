@@ -36,9 +36,9 @@ import salt.ext.tornado.web
 import salt.utils.files
 import salt.utils.platform
 import salt.utils.stringutils
-from pytestsalt.utils import get_unused_localhost_port
 from salt.ext import six
 from salt.ext.six.moves import builtins, range
+from saltfactories.utils.ports import get_unused_localhost_port
 from tests.support.mock import patch
 from tests.support.runtests import RUNTIME_VARS
 from tests.support.sminion import create_sminion
