@@ -8,13 +8,12 @@ from __future__ import absolute_import, print_function, unicode_literals
 import copy
 import datetime
 import logging
-import os
 
-import salt.config
+import pytest
+import salt.utils.schedule
 from salt.utils.schedule import Schedule
 from tests.support.mock import MagicMock, patch
-from tests.support.runtests import RUNTIME_VARS
-from tests.support.unit import TestCase, skipIf
+from tests.unit.utils.scheduler.base import SchedulerTestsBase
 
 # pylint: disable=import-error,unused-import
 try:
@@ -29,31 +28,10 @@ log = logging.getLogger(__name__)
 
 
 # pylint: disable=too-many-public-methods,invalid-name
-class ScheduleTestCase(TestCase):
+class ScheduleTestCase(SchedulerTestsBase):
     """
     Unit tests for salt.utils.schedule module
     """
-
-    @classmethod
-    def setUpClass(cls):
-        root_dir = os.path.join(RUNTIME_VARS.TMP, "schedule-unit-tests")
-        default_config = salt.config.minion_config(None)
-        default_config["conf_dir"] = default_config["root_dir"] = root_dir
-        default_config["sock_dir"] = os.path.join(root_dir, "test-socks")
-        default_config["pki_dir"] = os.path.join(root_dir, "pki")
-        default_config["cachedir"] = os.path.join(root_dir, "cache")
-        cls.default_config = default_config
-
-    @classmethod
-    def tearDownClass(cls):
-        delattr(cls, "default_config")
-
-    def setUp(self):
-        with patch("salt.utils.schedule.clean_proc_dir", MagicMock(return_value=None)):
-            self.schedule = Schedule(
-                copy.deepcopy(self.default_config), {}, returners={}, new_instance=True
-            )
-        self.addCleanup(delattr, self, "schedule")
 
     # delete_job tests
 
@@ -364,7 +342,7 @@ class ScheduleTestCase(TestCase):
             > datetime.timedelta(seconds=60)
         )
 
-    @skipIf(not _CRON_SUPPORTED, "croniter module not installed")
+    @pytest.mark.skipif(not _CRON_SUPPORTED, reason="croniter module not installed")
     def test_eval_schedule_cron(self):
         """
         Tests eval if the schedule is defined with cron expression
@@ -379,7 +357,7 @@ class ScheduleTestCase(TestCase):
             self.schedule.opts["schedule"]["testjob"]["_next_fire_time"] > now
         )
 
-    @skipIf(not _CRON_SUPPORTED, "croniter module not installed")
+    @pytest.mark.skipif(not _CRON_SUPPORTED, reason="croniter module not installed")
     def test_eval_schedule_cron_splay(self):
         """
         Tests eval if the schedule is defined with cron expression plus splay
