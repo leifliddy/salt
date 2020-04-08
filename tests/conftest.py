@@ -84,7 +84,9 @@ class LogCaptureHandler(
 ):
     """
     Subclassing PyTest's LogCaptureHandler in order to add the
-    exc_info_on_loglevel functionality.
+    exc_info_on_loglevel functionality and actually make it a NullHandler,
+    it's only used to print log messages emmited during tests, which we
+    have explicitly disabled in pytest.ini
     """
 
 
