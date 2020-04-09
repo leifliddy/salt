@@ -13,7 +13,7 @@ backports-abc==0.5 ; python_version < "3.0"
 backports.functools-lru-cache==1.5  # via cheroot, jaraco.functools
 backports.ssl-match-hostname==3.7.0.1
 backports.tempfile==1.0   # via moto
-backports.weakref==1.0.post1  # via backports.tempfile
+backports.weakref==1.0.post1  # via backports.tempfile, pytest-salt-factories
 boto3==1.9.132
 boto==2.49.0
 botocore==1.12.132        # via boto3, moto, s3transfer
@@ -88,8 +88,8 @@ pymysql==0.9.3
 pyopenssl==19.0.0
 pyparsing==2.4.5          # via packaging
 pytest-helpers-namespace==2019.1.8
+pytest-salt-factories==0.7.14
 pytest-salt-runtests-bridge==2019.12.5
-pytest-salt==2020.1.27
 pytest-tempdir==2019.10.12
 pytest==4.6.9
 python-dateutil==2.8.0
@@ -112,7 +112,7 @@ scandir==1.10.0           # via pathlib2
 sed==0.3.1
 setproctitle==1.1.10
 singledispatch==3.4.0.3 ; python_version < "3.4"
-six==1.12.0               # via cheroot, cherrypy, cryptography, docker, docker-pycreds, google-auth, kubernetes, mock, more-itertools, moto, packaging, pathlib2, pygit2, pyopenssl, pytest, python-dateutil, python-jose, pyvmomi, responses, salttesting, singledispatch, tempora, websocket-client
+six==1.12.0               # via cheroot, cherrypy, cryptography, docker, docker-pycreds, google-auth, kubernetes, mock, more-itertools, moto, packaging, pathlib2, pygit2, pyopenssl, pytest, pytest-salt-factories, python-dateutil, python-jose, pyvmomi, responses, salttesting, singledispatch, tempora, websocket-client
 smmap2==2.0.5
 strict-rfc3339==0.7
 supervisor==3.3.5 ; python_version < "3"

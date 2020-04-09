@@ -15,7 +15,7 @@ backports-abc==0.5 ; python_version < "3.0"
 backports.functools-lru-cache==1.5  # via cheroot, jaraco.functools
 backports.ssl-match-hostname==3.7.0.1
 backports.tempfile==1.0   # via moto
-backports.weakref==1.0.post1  # via backports.tempfile
+backports.weakref==1.0.post1  # via backports.tempfile, pytest-salt-factories
 bcrypt==3.1.6             # via paramiko
 boto3==1.9.132
 boto==2.49.0
@@ -97,8 +97,8 @@ pyopenssl==19.0.0
 pyparsing==2.4.5          # via packaging
 pyserial==3.4             # via junos-eznc
 pytest-helpers-namespace==2019.1.8
+pytest-salt-factories==0.7.14
 pytest-salt-runtests-bridge==2019.12.5
-pytest-salt==2020.1.27
 pytest-tempdir==2019.10.12
 pytest==4.6.9
 python-dateutil==2.8.0
@@ -120,7 +120,7 @@ scp==0.13.2               # via junos-eznc
 selectors2==2.0.1         # via ncclient
 setproctitle==1.1.10
 singledispatch==3.4.0.3 ; python_version < "3.4"
-six==1.12.0               # via bcrypt, cheroot, cherrypy, cryptography, docker, docker-pycreds, google-auth, junos-eznc, kubernetes, mock, more-itertools, moto, ncclient, packaging, pathlib2, pynacl, pyopenssl, pytest, python-dateutil, python-jose, pyvmomi, responses, salttesting, singledispatch, tempora, vcert, virtualenv, websocket-client
+six==1.12.0               # via bcrypt, cheroot, cherrypy, cryptography, docker, docker-pycreds, google-auth, junos-eznc, kubernetes, mock, more-itertools, moto, ncclient, packaging, pathlib2, pynacl, pyopenssl, pytest, pytest-salt-factories, python-dateutil, python-jose, pyvmomi, responses, salttesting, singledispatch, tempora, vcert, virtualenv, websocket-client
 smmap2==2.0.5             # via gitdb2
 strict-rfc3339==0.7
 supervisor==3.3.5 ; python_version < "3"
