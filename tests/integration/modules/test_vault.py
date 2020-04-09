@@ -12,7 +12,6 @@ import time
 import pytest
 import salt.utils.path
 from tests.support.case import ModuleCase
-from tests.support.helpers import flaky
 from tests.support.runtests import RUNTIME_VARS
 from tests.support.unit import skipIf
 
@@ -80,7 +79,7 @@ class VaultTestCase(ModuleCase):
             self.run_state("docker_container.absent", name="vault")
             self.run_state("docker_image.absent", name="vault", force=True)
 
-    @flaky
+    @pytest.mark.flaky(max_runs=4)
     def test_write_read_secret(self):
         assert (
             self.run_function(
@@ -96,7 +95,7 @@ class VaultTestCase(ModuleCase):
             "user": "foo",
         }
 
-    @flaky
+    @pytest.mark.flaky(max_runs=4)
     def test_write_raw_read_secret(self):
         assert (
             self.run_function(
@@ -111,7 +110,7 @@ class VaultTestCase(ModuleCase):
             "user": "foo",
         }
 
-    @flaky
+    @pytest.mark.flaky(max_runs=4)
     def test_delete_secret(self):
         assert (
             self.run_function(
@@ -126,7 +125,7 @@ class VaultTestCase(ModuleCase):
             self.run_function("vault.delete_secret", arg=["secret/my/secret"]) is True
         )
 
-    @flaky
+    @pytest.mark.flaky(max_runs=4)
     def test_list_secrets(self):
         assert (
             self.run_function(

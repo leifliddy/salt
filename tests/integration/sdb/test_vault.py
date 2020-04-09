@@ -11,7 +11,6 @@ import time
 import pytest
 import salt.utils.path
 from tests.support.case import ModuleCase, ShellCase
-from tests.support.helpers import flaky
 from tests.support.runtests import RUNTIME_VARS
 from tests.support.unit import skipIf
 
@@ -104,7 +103,7 @@ class VaultTestCase(ModuleCase, ShellCase):
             self.run_state("docker_container.absent", name="vault")
             self.run_state("docker_image.absent", name="vault", force=True)
 
-    @flaky
+    @pytest.mark.flaky(max_runs=4)
     def test_sdb(self):
         assert (
             self.run_function(
@@ -119,7 +118,7 @@ class VaultTestCase(ModuleCase, ShellCase):
             == "bar"
         )
 
-    @flaky
+    @pytest.mark.flaky(max_runs=4)
     def test_sdb_runner(self):
         assert self.run_run(
             "sdb.set sdb://sdbvault/secret/test/test_sdb_runner/foo bar"
@@ -128,7 +127,7 @@ class VaultTestCase(ModuleCase, ShellCase):
             "sdb.get sdb://sdbvault/secret/test/test_sdb_runner/foo"
         ) == ["bar"]
 
-    @flaky
+    @pytest.mark.flaky(max_runs=4)
     def test_config(self):
         assert (
             self.run_function(
