@@ -22,6 +22,7 @@ from tests.support.case import ShellCase, SSHCase
 
 
 @pytest.mark.windows_whitelisted
+@pytest.mark.usefixtures("salt_sub_minion")
 class GrainsTargetingTest(ShellCase):
     """
     Integration tests for targeting with grains.

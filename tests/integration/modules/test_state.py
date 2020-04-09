@@ -60,6 +60,7 @@ def reline(source, dest, force=False, ending=DEFAULT_ENDING):
 
 
 @pytest.mark.windows_whitelisted
+@pytest.mark.usefixtures("salt_sub_minion")
 class StateModuleTest(ModuleCase, SaltReturnAssertsMixin):
     """
     Validate the state module
