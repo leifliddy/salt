@@ -1,18 +1,13 @@
 # -*- coding: utf-8 -*-
 
-# Import python libs
 from __future__ import absolute_import
 
 import os
 import sys
 
 import salt.modules.pip as pip
-
-# Import salt libs
 import salt.utils.platform
 from salt.exceptions import CommandExecutionError
-
-# Import Salt Testing libs
 from tests.support.mixins import LoaderModuleMockMixin
 from tests.support.mock import MagicMock, patch
 from tests.support.unit import TestCase
