@@ -4,19 +4,15 @@
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 """
 
-# Import Python libs
 from __future__ import absolute_import
 
 import fnmatch
 import os
 
-# Import Salt libs
 import salt.utils.path
 import salt.utils.stringutils
 from tests.support.paths import list_test_mods
 from tests.support.runtests import RUNTIME_VARS
-
-# Import Salt Testing libs
 from tests.support.unit import TestCase
 
 EXCLUDED_DIRS = [
@@ -41,7 +37,6 @@ EXCLUDED_FILES = [
     os.path.join("tests", "saltsh.py"),
     os.path.join("tests", "minionswarm.py"),
     os.path.join("tests", "wheeltest.py"),
-    os.path.join("tests", "runtests.py"),
     os.path.join("tests", "jenkins.py"),
     os.path.join("tests", "salt-tcpdump.py"),
     os.path.join("tests", "packdump.py"),
