@@ -10,9 +10,6 @@
     Custom reusable :class:`TestCase<python2:unittest.TestCase>`
     implementations.
 """
-# pylint: disable=repr-flag-used-in-string
-
-# Import python libs
 from __future__ import absolute_import, unicode_literals
 
 import errno
@@ -26,24 +23,18 @@ import textwrap
 import time
 from datetime import datetime, timedelta
 
-# Import 3rd-party libs
 from salt.ext import six
-from salt.ext.six.moves import cStringIO  # pylint: disable=import-error
+from salt.ext.six.moves import cStringIO
 from tests.support.cli_scripts import ScriptPathMixin
 from tests.support.helpers import RedirectStdStreams, requires_sshd_server
-
-# ----- Backwards Compatible Imports -------------------------------------------------------------------------------->
-from tests.support.mixins import (  # pylint: disable=unused-import
+from tests.support.mixins import (
     AdaptedConfigurationTestCaseMixin,
     SaltClientTestCaseMixin,
     SaltMultimasterClientTestCaseMixin,
-    ShellCaseCommonTestsMixin,
 )
 from tests.support.paths import CODE_DIR, INTEGRATION_TEST_DIR, PYEXEC, SCRIPT_DIR
 from tests.support.processes import terminate_process
 from tests.support.runtests import RUNTIME_VARS
-
-# Import salt testing libs
 from tests.support.unit import TestCase
 
 STATE_FUNCTION_RUNNING_RE = re.compile(
@@ -74,7 +65,9 @@ class ShellTestCase(TestCase, AdaptedConfigurationTestCaseMixin, ScriptPathMixin
                     data = '\n'.join(data)
                     self.assertIn('minion', data)
         '''
-        arg_str = "-c {0} -t {1} {2}".format(self.config_dir, timeout, arg_str)
+        arg_str = "-c {0} -t {1} {2}".format(
+            RUNTIME_VARS.TMP_CONF_DIR, timeout, arg_str
+        )
         return self.run_script(
             "salt",
             arg_str,
@@ -99,7 +92,7 @@ class ShellTestCase(TestCase, AdaptedConfigurationTestCaseMixin, ScriptPathMixin
         arg_str = "{0} {1} -c {2} -i --priv {3} --roster-file {4} localhost {5} --out=json".format(
             " -W" if wipe else "",
             " -r" if raw else "",
-            self.config_dir,
+            RUNTIME_VARS.TMP_CONF_DIR,
             os.path.join(RUNTIME_VARS.TMP_CONF_DIR, "key_test"),
             os.path.join(RUNTIME_VARS.TMP_CONF_DIR, "roster"),
             arg_str,
@@ -129,7 +122,7 @@ class ShellTestCase(TestCase, AdaptedConfigurationTestCaseMixin, ScriptPathMixin
         """
         asynchronous = kwargs.get("async", asynchronous)
         arg_str = "-c {0}{async_flag} -t {timeout} {1}".format(
-            config_dir or self.config_dir,
+            config_dir or RUNTIME_VARS.TMP_CONF_DIR,
             arg_str,
             timeout=timeout,
             async_flag=" --async" if asynchronous else "",
@@ -186,7 +179,7 @@ class ShellTestCase(TestCase, AdaptedConfigurationTestCaseMixin, ScriptPathMixin
         """
         Execute salt-key
         """
-        arg_str = "-c {0} {1}".format(self.config_dir, arg_str)
+        arg_str = "-c {0} {1}".format(RUNTIME_VARS.TMP_CONF_DIR, arg_str)
         return self.run_script(
             "salt-key", arg_str, catch_stderr=catch_stderr, with_retcode=with_retcode
         )
@@ -195,7 +188,7 @@ class ShellTestCase(TestCase, AdaptedConfigurationTestCaseMixin, ScriptPathMixin
         """
         Execute salt-cp
         """
-        arg_str = "--config-dir {0} {1}".format(self.config_dir, arg_str)
+        arg_str = "--config-dir {0} {1}".format(RUNTIME_VARS.TMP_CONF_DIR, arg_str)
         return self.run_script(
             "salt-cp", arg_str, with_retcode=with_retcode, catch_stderr=catch_stderr
         )
@@ -210,7 +203,7 @@ class ShellTestCase(TestCase, AdaptedConfigurationTestCaseMixin, ScriptPathMixin
         config_dir=None,
     ):
         if not config_dir:
-            config_dir = self.config_dir
+            config_dir = RUNTIME_VARS.TMP_MINION_CONF_DIR
         arg_str = "{0} --config-dir {1} {2}".format(
             "--local" if local else "", config_dir, arg_str
         )
@@ -239,7 +232,7 @@ class ShellTestCase(TestCase, AdaptedConfigurationTestCaseMixin, ScriptPathMixin
         """
         Execute salt-cloud
         """
-        arg_str = "-c {0} {1}".format(self.config_dir, arg_str)
+        arg_str = "-c {0} {1}".format(RUNTIME_VARS.TMP_CONF_DIR, arg_str)
         return self.run_script("salt-cloud", arg_str, catch_stderr, timeout)
 
     def run_script(
@@ -487,8 +480,7 @@ class ShellCase(ShellTestCase, AdaptedConfigurationTestCaseMixin, ScriptPathMixi
         except OSError:
             os.chdir(INTEGRATION_TEST_DIR)
 
-    # pylint: disable=arguments-differ
-    def run_salt(
+    def run_salt(  # pylint: disable=arguments-differ
         self,
         arg_str,
         with_retcode=False,
@@ -499,7 +491,9 @@ class ShellCase(ShellTestCase, AdaptedConfigurationTestCaseMixin, ScriptPathMixi
         """
         Execute salt
         """
-        arg_str = "-c {0} -t {1} {2}".format(self.config_dir, timeout, arg_str)
+        arg_str = "-c {0} -t {1} {2}".format(
+            RUNTIME_VARS.TMP_CONF_DIR, timeout, arg_str
+        )
         ret = self.run_script(
             "salt",
             arg_str,
@@ -513,7 +507,7 @@ class ShellCase(ShellTestCase, AdaptedConfigurationTestCaseMixin, ScriptPathMixi
 
     def run_spm(
         self, arg_str, with_retcode=False, catch_stderr=False, timeout=RUN_TIMEOUT
-    ):
+    ):  # pylint: disable=arguments-differ
         """
         Execute spm
         """
@@ -527,7 +521,7 @@ class ShellCase(ShellTestCase, AdaptedConfigurationTestCaseMixin, ScriptPathMixi
         log.debug("Result of run_spm for command '%s': %s", arg_str, ret)
         return ret
 
-    def run_ssh(
+    def run_ssh(  # pylint: disable=arguments-differ
         self,
         arg_str,
         with_retcode=False,
@@ -543,7 +537,7 @@ class ShellCase(ShellTestCase, AdaptedConfigurationTestCaseMixin, ScriptPathMixi
         arg_str = "{0} -ldebug{1} -c {2} -i --priv {3} --roster-file {4} --out=json localhost {5}".format(
             " -W" if wipe else "",
             " -r" if raw else "",
-            self.config_dir,
+            RUNTIME_VARS.TMP_CONF_DIR,
             os.path.join(RUNTIME_VARS.TMP_CONF_DIR, "key_test"),
             os.path.join(RUNTIME_VARS.TMP_CONF_DIR, "roster"),
             arg_str,
@@ -560,8 +554,6 @@ class ShellCase(ShellTestCase, AdaptedConfigurationTestCaseMixin, ScriptPathMixi
         log.debug("Result of run_ssh for command '%s %s': %s", arg_str, kwargs, ret)
         return ret
 
-    # pylint: enable=arguments-differ
-
     def run_run(
         self,
         arg_str,
@@ -577,7 +569,7 @@ class ShellCase(ShellTestCase, AdaptedConfigurationTestCaseMixin, ScriptPathMixi
         """
         asynchronous = kwargs.get("async", asynchronous)
         arg_str = "-c {0}{async_flag} -t {timeout} {1}".format(
-            config_dir or self.config_dir,
+            config_dir or RUNTIME_VARS.TMP_CONF_DIR,
             arg_str,
             timeout=timeout,
             async_flag=" --async" if asynchronous else "",
@@ -634,14 +626,13 @@ class ShellCase(ShellTestCase, AdaptedConfigurationTestCaseMixin, ScriptPathMixi
         )
         return ret
 
-    # pylint: disable=arguments-differ
-    def run_key(
+    def run_key(  # pylint: disable=arguments-differ
         self, arg_str, catch_stderr=False, with_retcode=False, timeout=RUN_TIMEOUT,
     ):
         """
         Execute salt-key
         """
-        arg_str = "-c {0} {1}".format(self.config_dir, arg_str)
+        arg_str = "-c {0} {1}".format(RUNTIME_VARS.TMP_CONF_DIR, arg_str)
         ret = self.run_script(
             "salt-key",
             arg_str,
@@ -652,10 +643,7 @@ class ShellCase(ShellTestCase, AdaptedConfigurationTestCaseMixin, ScriptPathMixi
         log.debug("Result of run_key for command '%s': %s", arg_str, ret)
         return ret
 
-    # pylint: disable=arguments-differ
-
-    # pylint: disable=arguments-differ
-    def run_cp(
+    def run_cp(  # pylint: disable=arguments-differ
         self, arg_str, with_retcode=False, catch_stderr=False, timeout=RUN_TIMEOUT,
     ):
         """
@@ -663,7 +651,7 @@ class ShellCase(ShellTestCase, AdaptedConfigurationTestCaseMixin, ScriptPathMixi
         """
         # Note: not logging result of run_cp because it will log a bunch of
         # bytes which will not be very helpful.
-        arg_str = "--config-dir {0} {1}".format(self.config_dir, arg_str)
+        arg_str = "--config-dir {0} {1}".format(RUNTIME_VARS.TMP_CONF_DIR, arg_str)
         return self.run_script(
             "salt-cp",
             arg_str,
@@ -672,8 +660,6 @@ class ShellCase(ShellTestCase, AdaptedConfigurationTestCaseMixin, ScriptPathMixi
             timeout=timeout,
         )
 
-    # pylint: enable=arguments-differ
-    # pylint: disable=arguments-differ
     def run_call(
         self,
         arg_str,
@@ -687,7 +673,7 @@ class ShellCase(ShellTestCase, AdaptedConfigurationTestCaseMixin, ScriptPathMixi
         Execute salt-call.
         """
         if not config_dir:
-            config_dir = self.config_dir
+            config_dir = RUNTIME_VARS.TMP_MINION_CONF_DIR
         arg_str = "{0} --config-dir {1} {2}".format(
             "--local" if local else "", config_dir, arg_str
         )
@@ -707,7 +693,7 @@ class ShellCase(ShellTestCase, AdaptedConfigurationTestCaseMixin, ScriptPathMixi
         """
         Execute salt-cloud
         """
-        arg_str = "-c {0} {1}".format(self.config_dir, arg_str)
+        arg_str = "-c {0} {1}".format(RUNTIME_VARS.TMP_CONF_DIR, arg_str)
         ret = self.run_script("salt-cloud", arg_str, catch_stderr, timeout=timeout)
         log.debug("Result of run_cloud for command '%s': %s", arg_str, ret)
         return ret
@@ -1144,6 +1130,3 @@ class ClientCase(AdaptedConfigurationTestCaseMixin, TestCase):
                 pass
             else:
                 raise
-
-
-# <---- Backwards Compatible Imports ---------------------------------------------------------------------------------

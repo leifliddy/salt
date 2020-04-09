@@ -3,14 +3,12 @@
     :codeauthor: :email:`Daniel Wallace <dwallace@saltstack.com`
 """
 
-# Import python libs
 from __future__ import absolute_import, print_function, unicode_literals
 
 import os
 import shutil
 import tempfile
 
-# Import Salt libs
 import salt.config
 import salt.roster
 import salt.utils.files
@@ -20,8 +18,6 @@ import salt.utils.yaml
 from salt.client import ssh
 from tests.support.case import ShellCase
 from tests.support.mock import MagicMock, patch
-
-# Import Salt Testing libs
 from tests.support.runtests import RUNTIME_VARS
 from tests.support.unit import TestCase, skipIf
 
@@ -47,7 +43,7 @@ class SSHPasswordTests(ShellCase):
         opts["selected_target_option"] = "glob"
         opts["tgt"] = "localhost"
         opts["arg"] = []
-        roster = os.path.join(self.config_dir, "roster")
+        roster = os.path.join(RUNTIME_VARS.TMP_CONF_DIR, "roster")
         handle_ssh_ret = [
             {
                 "localhost": {
