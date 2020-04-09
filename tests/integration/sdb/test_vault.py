@@ -3,23 +3,20 @@
 Integration tests for the vault modules
 """
 
-# Import Python Libs
 from __future__ import absolute_import, print_function, unicode_literals
 
 import inspect
 import time
 
-# Import Salt Libs
+import pytest
 import salt.utils.path
 from tests.support.case import ModuleCase, ShellCase
-from tests.support.helpers import destructiveTest, flaky
+from tests.support.helpers import flaky
 from tests.support.runtests import RUNTIME_VARS
-
-# Import Salt Testing Libs
 from tests.support.unit import skipIf
 
 
-@destructiveTest
+@pytest.mark.destructive_test
 @skipIf(not salt.utils.path.which("dockerd"), "Docker not installed")
 @skipIf(not salt.utils.path.which("vault"), "Vault not installed")
 class VaultTestCase(ModuleCase, ShellCase):

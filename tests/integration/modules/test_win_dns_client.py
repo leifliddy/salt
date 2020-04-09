@@ -1,14 +1,10 @@
 # -*- coding: utf-8 -*-
 
-# Import Python libs
 from __future__ import absolute_import
 
-# Import Salt libs
+import pytest
 import salt.utils.platform
-
-# Import Salt Testing libs
 from tests.support.case import ModuleCase
-from tests.support.helpers import destructiveTest
 from tests.support.unit import skipIf
 
 
@@ -18,7 +14,7 @@ class WinDNSTest(ModuleCase):
     Test for salt.modules.win_dns_client
     """
 
-    @destructiveTest
+    @pytest.mark.destructive_test
     def test_add_remove_dns(self):
         """
         Test add and removing a dns server

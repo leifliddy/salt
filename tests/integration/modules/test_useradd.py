@@ -9,11 +9,11 @@ import pytest
 import salt.utils.platform
 from salt.ext.six.moves import range
 from tests.support.case import ModuleCase
-from tests.support.helpers import destructiveTest, requires_system_grains
+from tests.support.helpers import requires_system_grains
 from tests.support.unit import skipIf
 
 
-@destructiveTest
+@pytest.mark.destructive_test
 @skipIf(not salt.utils.platform.is_linux(), "These tests can only be run on linux")
 @pytest.mark.skip_if_not_root
 class UseraddModuleTestLinux(ModuleCase):
@@ -93,7 +93,7 @@ class UseraddModuleTestLinux(ModuleCase):
             raise
 
 
-@destructiveTest
+@pytest.mark.destructive_test
 @skipIf(not salt.utils.platform.is_windows(), "These tests can only be run on Windows")
 @pytest.mark.skip_if_not_root
 class UseraddModuleTestWindows(ModuleCase):

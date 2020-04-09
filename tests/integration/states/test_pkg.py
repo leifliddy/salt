@@ -1,29 +1,22 @@
 # -*- coding: utf-8 -*-
-
 """
 tests for pkg state
 """
-# Import Python libs
 from __future__ import absolute_import, print_function, unicode_literals
 
 import logging
 import os
 import time
 
-# Import Salt libs
+import pytest
 import salt.utils.files
 import salt.utils.path
 import salt.utils.pkg.rpm
 import salt.utils.platform
-
-# Import 3rd-party libs
 from salt.ext import six
-from salt.ext.six.moves import range  # pylint: disable=import-error,redefined-builtin
-
-# Import Salt Testing libs
+from salt.ext.six.moves import range
 from tests.support.case import ModuleCase
 from tests.support.helpers import (
-    destructiveTest,
     not_runs_on,
     requires_salt_modules,
     requires_salt_states,
@@ -36,7 +29,7 @@ from tests.support.unit import skipIf
 log = logging.getLogger(__name__)
 
 
-@destructiveTest
+@pytest.mark.destructive_test
 class PkgTest(ModuleCase, SaltReturnAssertsMixin):
     _PKG_EPOCH_TARGETS = []
     _PKG_32_TARGETS = []

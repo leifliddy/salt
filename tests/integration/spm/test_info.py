@@ -7,12 +7,13 @@ from __future__ import absolute_import, print_function, unicode_literals
 
 import shutil
 
+import pytest
+
 # Import Salt Testing libs
 from tests.support.case import SPMCase
-from tests.support.helpers import destructiveTest
 
 
-@destructiveTest
+@pytest.mark.destructive_test
 class SPMInfoTest(SPMCase):
     """
     Validate the spm info command

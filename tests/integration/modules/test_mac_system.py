@@ -14,7 +14,7 @@ import salt.utils.path
 import salt.utils.platform
 from salt.ext.six.moves import range
 from tests.support.case import ModuleCase
-from tests.support.helpers import destructiveTest, flaky
+from tests.support.helpers import flaky
 from tests.support.unit import skipIf
 
 log = logging.getLogger(__name__)
@@ -77,7 +77,7 @@ class MacSystemModuleTest(ModuleCase):
             "system.set_disable_keyboard_on_lock", [self.KEYBOARD_DISABLED]
         )
 
-    @destructiveTest
+    @pytest.mark.destructive_test
     def test_get_set_remote_login(self):
         """
         Test system.get_remote_login
@@ -105,7 +105,7 @@ class MacSystemModuleTest(ModuleCase):
             self.run_function("system.set_remote_login", ["spongebob"]),
         )
 
-    @destructiveTest
+    @pytest.mark.destructive_test
     def test_get_set_remote_events(self):
         """
         Test system.get_remote_events
@@ -133,7 +133,7 @@ class MacSystemModuleTest(ModuleCase):
             self.run_function("system.set_remote_events", ["spongebob"]),
         )
 
-    @destructiveTest
+    @pytest.mark.destructive_test
     def test_get_set_subnet_name(self):
         """
         Test system.get_subnet_name
@@ -258,7 +258,7 @@ class MacSystemComputerNameTest(ModuleCase):
     # something similar again we may want to skip this gain until we
     # investigate
     # @skipIf(salt.utils.platform.is_darwin() and six.PY3, 'This test hangs on OS X on Py3.  Skipping until #53566 is merged.')
-    @destructiveTest
+    @pytest.mark.destructive_test
     def test_get_set_computer_name(self):
         """
         Test system.get_computer_name

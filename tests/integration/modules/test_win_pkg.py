@@ -1,18 +1,14 @@
 # -*- coding: utf-8 -*-
 
-# Import Python libs
 from __future__ import absolute_import, print_function, unicode_literals
 
 import os
 import textwrap
 
-# Import Salt libs
+import pytest
 import salt.utils.files
 import salt.utils.platform
-
-# Import Salt Testing libs
 from tests.support.case import ModuleCase
-from tests.support.helpers import destructiveTest
 from tests.support.runtests import RUNTIME_VARS
 from tests.support.unit import skipIf
 
@@ -38,7 +34,7 @@ class WinPKGTest(ModuleCase):
         if os.path.isfile(self.curl_sls_path):
             os.remove(self.curl_sls_path)
 
-    @destructiveTest
+    @pytest.mark.destructive_test
     def test_adding_removing_pkg_sls(self):
         """
         Test add and removing a new pkg sls

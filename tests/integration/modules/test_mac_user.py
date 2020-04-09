@@ -15,7 +15,6 @@ import salt.utils.files
 from salt.exceptions import CommandExecutionError
 from salt.ext.six.moves import range
 from tests.support.case import ModuleCase
-from tests.support.helpers import destructiveTest
 
 
 def __random_string(size=6):
@@ -34,7 +33,7 @@ PRIMARY_GROUP_USER = __random_string()
 CHANGE_USER = __random_string()
 
 
-@destructiveTest
+@pytest.mark.destructive_test
 @pytest.mark.skip_if_not_root
 class MacUserModuleTest(ModuleCase):
     """

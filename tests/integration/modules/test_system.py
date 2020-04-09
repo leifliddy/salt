@@ -18,7 +18,7 @@ import salt.utils.platform
 from salt.ext import six
 from salt.ext.six.moves import range
 from tests.support.case import ModuleCase
-from tests.support.helpers import destructiveTest, flaky, requires_system_grains
+from tests.support.helpers import flaky, requires_system_grains
 from tests.support.unit import SkipTest, skipIf
 
 log = logging.getLogger(__name__)
@@ -196,7 +196,7 @@ class SystemModuleTest(ModuleCase):
         msg = "Difference in times is too large. Now: {0} Fake: {1}".format(t1, t2)
         self.assertTrue(self._same_times(t1, t2, seconds_diff=2), msg=msg)
 
-    @destructiveTest
+    @pytest.mark.destructive_test
     @pytest.mark.skip_if_not_root
     def test_set_system_date_time(self):
         """
@@ -214,7 +214,7 @@ class SystemModuleTest(ModuleCase):
         self.assertTrue(result and self._same_times(time_now, cmp_time), msg=msg)
         self._test_hwclock_sync()
 
-    @destructiveTest
+    @pytest.mark.destructive_test
     @pytest.mark.skip_if_not_root
     def test_set_system_date_time_utc(self):
         """
@@ -233,7 +233,7 @@ class SystemModuleTest(ModuleCase):
         self.assertTrue(self._same_times(time_now, cmp_time), msg=msg)
         self._test_hwclock_sync()
 
-    @destructiveTest
+    @pytest.mark.destructive_test
     @pytest.mark.skip_if_not_root
     def test_set_system_date_time_utcoffset_east(self):
         """
@@ -254,7 +254,7 @@ class SystemModuleTest(ModuleCase):
         self.assertTrue(self._same_times(time_now, cmp_time), msg=msg)
         self._test_hwclock_sync()
 
-    @destructiveTest
+    @pytest.mark.destructive_test
     @pytest.mark.skip_if_not_root
     def test_set_system_date_time_utcoffset_west(self):
         """
@@ -276,7 +276,7 @@ class SystemModuleTest(ModuleCase):
         self._test_hwclock_sync()
 
     @flaky
-    @destructiveTest
+    @pytest.mark.destructive_test
     @pytest.mark.skip_if_not_root
     def test_set_system_time(self):
         """
@@ -296,7 +296,7 @@ class SystemModuleTest(ModuleCase):
         self.assertTrue(self._same_times(time_now, cmp_time), msg=msg)
         self._test_hwclock_sync()
 
-    @destructiveTest
+    @pytest.mark.destructive_test
     @pytest.mark.skip_if_not_root
     def test_set_system_date(self):
         """
@@ -337,7 +337,7 @@ class SystemModuleTest(ModuleCase):
                     data = mach_info.read()
                     self.assertIn(res, data.decode("string_escape"))
 
-    @destructiveTest
+    @pytest.mark.destructive_test
     @pytest.mark.skip_if_not_root
     def test_set_computer_desc(self):
         """
@@ -351,7 +351,7 @@ class SystemModuleTest(ModuleCase):
         self.assertTrue(ret)
         self.assertIn(desc, computer_desc)
 
-    @destructiveTest
+    @pytest.mark.destructive_test
     @pytest.mark.skip_if_not_root
     def test_set_computer_desc_multiline(self):
         """
@@ -415,7 +415,7 @@ class WinSystemModuleTest(ModuleCase):
         name = socket.gethostname()
         self.assertEqual(name, ret)
 
-    @destructiveTest
+    @pytest.mark.destructive_test
     def test_set_computer_desc(self):
         """
         Test setting the computer description
@@ -456,7 +456,7 @@ class WinSystemModuleTest(ModuleCase):
         self.assertTrue(diff.seconds < 330)
 
     @skipIf(True, "WAR ROOM 7/18/2019, unit test?")
-    @destructiveTest
+    @pytest.mark.destructive_test
     def test_set_system_time(self):
         """
         Test setting the system time
@@ -487,7 +487,7 @@ class WinSystemModuleTest(ModuleCase):
         self.assertEqual(date, ret)
 
     @skipIf(True, "WAR ROOM 7/18/2019, unit test?")
-    @destructiveTest
+    @pytest.mark.destructive_test
     def test_set_system_date(self):
         """
         Test setting system date

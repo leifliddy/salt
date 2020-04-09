@@ -10,7 +10,6 @@ import time
 import pytest
 import salt.utils.platform
 from tests.support.case import ModuleCase
-from tests.support.helpers import destructiveTest
 from tests.support.unit import skipIf
 
 
@@ -74,7 +73,7 @@ class Nilrt_ipModuleTest(ModuleCase):
             interfaceList.append(iface["connectionid"])
         return interfaceList
 
-    @destructiveTest
+    @pytest.mark.destructive_test
     def test_down(self):
         interfaces = self.__interfaces()
         for interface in interfaces:
@@ -84,7 +83,7 @@ class Nilrt_ipModuleTest(ModuleCase):
         for interface in info["interfaces"]:
             self.assertFalse(self.__connected(interface))
 
-    @destructiveTest
+    @pytest.mark.destructive_test
     def test_up(self):
         interfaces = self.__interfaces()
         # first down all interfaces
@@ -98,7 +97,7 @@ class Nilrt_ipModuleTest(ModuleCase):
         for interface in info["interfaces"]:
             self.assertTrue(self.__connected(interface))
 
-    @destructiveTest
+    @pytest.mark.destructive_test
     def test_set_dhcp_linklocal_all(self):
         interfaces = self.__interfaces()
         for interface in interfaces:
@@ -108,7 +107,7 @@ class Nilrt_ipModuleTest(ModuleCase):
         for interface in info["interfaces"]:
             self.assertEqual(interface["ipv4"]["requestmode"], "dhcp_linklocal")
 
-    @destructiveTest
+    @pytest.mark.destructive_test
     def test_static_all(self):
         interfaces = self.__interfaces()
         for interface in interfaces:

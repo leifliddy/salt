@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
 
-# Import Python libs
 from __future__ import absolute_import
 
-# Import Salt Libs
+import pytest
 import salt.utils.platform
-
-# Import Salt Testing libs
 from tests.support.case import ModuleCase
-from tests.support.helpers import destructiveTest, flaky
+from tests.support.helpers import flaky
 from tests.support.unit import skipIf
 
 
@@ -19,7 +16,7 @@ class NTPTest(ModuleCase):
     Validate windows ntp module
     """
 
-    @destructiveTest
+    @pytest.mark.destructive_test
     def test_ntp_set_servers(self):
         """
         test ntp get and set servers

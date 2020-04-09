@@ -2,25 +2,19 @@
 """
 Tests for the archive state
 """
-# Import python libs
 from __future__ import absolute_import, print_function, unicode_literals
 
 import os
 import shutil
 import textwrap
 
-# Import salt libs
+import pytest
 import salt.utils.files
 import salt.utils.path
 import salt.utils.platform
 import salt.utils.stringutils
-
-# Import 3rd party libs
 from salt.ext import six
 from tests.support.case import ModuleCase
-from tests.support.helpers import destructiveTest
-
-# Import Salt Testing libs
 from tests.support.runtests import RUNTIME_VARS
 from tests.support.unit import skipIf
 
@@ -32,7 +26,7 @@ except ImportError:
     HAS_ZIPFILE = False
 
 
-@destructiveTest
+@pytest.mark.destructive_test
 class ArchiveTest(ModuleCase):
     """
     Validate the archive module
