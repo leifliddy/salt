@@ -15,6 +15,7 @@ from tests.support.unit import skipIf
 
 
 @pytest.mark.destructive_test
+@pytest.mark.windows_whitelisted
 class SPMBuildTest(SPMCase, ModuleCase):
     """
     Validate the spm build command

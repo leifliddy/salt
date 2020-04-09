@@ -6,8 +6,9 @@ import pytest
 from tests.support.case import ModuleCase
 
 
-@pytest.mark.skip_if_not_root
 @pytest.mark.requires_salt_modules("rabbitmq")
+@pytest.mark.skip_if_not_root
+@pytest.mark.windows_whitelisted
 class RabbitModuleTest(ModuleCase):
     """
     Validates the rabbitmqctl functions.

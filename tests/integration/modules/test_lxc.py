@@ -16,10 +16,11 @@ from tests.support.unit import skipIf
     "Needs rewrite to be more distro agnostic. Also, the tearDown "
     "function destroys ALL containers on the box, which is BAD.",
 )
-@pytest.mark.skip_if_not_root
 @pytest.mark.skip_if_binaries_missing(
     "lxc-start", message="LXC is not installed or minimal version not met"
 )
+@pytest.mark.skip_if_not_root
+@pytest.mark.windows_whitelisted
 class LXCModuleTest(ModuleCase):
     """
     Test the lxc module

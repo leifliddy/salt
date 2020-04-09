@@ -9,6 +9,7 @@ from tests.support.unit import skipIf
 
 
 @skipIf(not salt.utils.platform.is_windows(), "windows test only")
+@pytest.mark.windows_whitelisted
 class WinDNSTest(ModuleCase):
     """
     Test for salt.modules.win_dns_client

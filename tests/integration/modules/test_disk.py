@@ -13,6 +13,7 @@ from tests.support.unit import skipIf
 
 
 @pytest.mark.destructive_test
+@pytest.mark.windows_whitelisted
 @skipIf(salt.utils.platform.is_darwin(), "No mtab on Darwin")
 @skipIf(salt.utils.platform.is_freebsd(), "No mtab on FreeBSD")
 @skipIf(salt.utils.platform.is_windows(), "No mtab on Windows")
@@ -37,6 +38,7 @@ class DiskModuleVirtualizationTest(ModuleCase):
             shutil.move("/tmp/mtab", "/etc/mtab")
 
 
+@pytest.mark.windows_whitelisted
 class DiskModuleTest(ModuleCase):
     """
     Validate the disk module

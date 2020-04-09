@@ -69,6 +69,7 @@ class VirtualEnv(object):
 @skipIf(
     salt.utils.path.which_bin(KNOWN_BINARY_NAMES) is None, "virtualenv not installed"
 )
+@pytest.mark.windows_whitelisted
 class PipStateTest(ModuleCase, SaltReturnAssertsMixin):
     def _create_virtualenv(self, path, **kwargs):
         """
@@ -612,6 +613,7 @@ class PipStateTest(ModuleCase, SaltReturnAssertsMixin):
                 shutil.rmtree(venv_dir)
 
 
+@pytest.mark.windows_whitelisted
 class PipStateInRequisiteTest(ModuleCase, SaltReturnAssertsMixin):
     @with_tempdir()
     def test_issue_54755(self, tmpdir):

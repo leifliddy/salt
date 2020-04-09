@@ -9,6 +9,7 @@ from tests.support.unit import skipIf
 
 
 @skipIf(not salt.utils.platform.is_windows(), "Tests for only Windows")
+@pytest.mark.windows_whitelisted
 class FirewallTest(ModuleCase):
     """
     Validate windows firewall module

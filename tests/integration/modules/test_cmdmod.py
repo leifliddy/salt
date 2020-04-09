@@ -21,6 +21,7 @@ AVAILABLE_PYTHON_EXECUTABLE = salt.utils.path.which_bin(
 )
 
 
+@pytest.mark.windows_whitelisted
 class CMDModuleTest(ModuleCase):
     """
     Validate the cmd module

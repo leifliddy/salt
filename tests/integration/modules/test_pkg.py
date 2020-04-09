@@ -15,6 +15,7 @@ from tests.support.mixins import SaltReturnAssertsMixin
 from tests.support.unit import skipIf
 
 
+@pytest.mark.windows_whitelisted
 class PkgModuleTest(ModuleCase, SaltReturnAssertsMixin):
     """
     Validate the pkg module

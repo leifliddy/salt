@@ -15,6 +15,7 @@ from salt.ext.six.moves import range
 from tests.support.case import ModuleCase
 
 
+@pytest.mark.windows_whitelisted
 class PwUserModuleTest(ModuleCase):
     def setUp(self):
         super(PwUserModuleTest, self).setUp()

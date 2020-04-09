@@ -16,6 +16,7 @@ from tests.support.unit import skipIf
 @pytest.mark.destructive_test
 @skipIf(not salt.utils.platform.is_linux(), "These tests can only be run on linux")
 @pytest.mark.skip_if_not_root
+@pytest.mark.windows_whitelisted
 class UseraddModuleTestLinux(ModuleCase):
     def setUp(self):
         super(UseraddModuleTestLinux, self).setUp()
@@ -96,6 +97,7 @@ class UseraddModuleTestLinux(ModuleCase):
 @pytest.mark.destructive_test
 @skipIf(not salt.utils.platform.is_windows(), "These tests can only be run on Windows")
 @pytest.mark.skip_if_not_root
+@pytest.mark.windows_whitelisted
 class UseraddModuleTestWindows(ModuleCase):
     def __random_string(self, size=6):
         return "RS-" + "".join(

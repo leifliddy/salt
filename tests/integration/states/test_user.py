@@ -43,6 +43,7 @@ else:
 
 @pytest.mark.destructive_test
 @pytest.mark.skip_if_not_root
+@pytest.mark.windows_whitelisted
 class UserTest(ModuleCase, SaltReturnAssertsMixin):
     """
     test for user absent
@@ -291,6 +292,7 @@ class UserTest(ModuleCase, SaltReturnAssertsMixin):
 @pytest.mark.destructive_test
 @pytest.mark.skip_if_not_root
 @skipIf(not salt.utils.platform.is_windows(), "Windows only tests")
+@pytest.mark.windows_whitelisted
 class WinUserTest(ModuleCase, SaltReturnAssertsMixin):
     """
     test for user absent

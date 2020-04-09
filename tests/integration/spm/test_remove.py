@@ -15,6 +15,7 @@ from tests.support.case import SPMCase
 
 
 @pytest.mark.destructive_test
+@pytest.mark.windows_whitelisted
 class SPMRemoveTest(SPMCase):
     """
     Validate the spm remove command

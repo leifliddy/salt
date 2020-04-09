@@ -41,10 +41,11 @@ def gen_password():
     return password, hashed_pwd
 
 
-@requires_salt_states("user.absent", "user.present")
 @skipIf(pwd is None or grp is None, "No pwd or grp module available")
 @pytest.mark.skip_if_not_root
 @pytest.mark.destructive_test
+@pytest.mark.windows_whitelisted
+@requires_salt_states("user.absent", "user.present")
 @pytest.mark.requires_salt_modules("shadow.set_password")
 class UserAuthTest(ModuleCase, SaltReturnAssertsMixin, ShellCase):
     """

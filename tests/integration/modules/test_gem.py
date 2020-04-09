@@ -22,8 +22,9 @@ def check_status():
         return False
 
 
-@pytest.mark.destructive_test
 @skipIf(not salt.utils.path.which("gem"), "Gem is not available")
+@pytest.mark.destructive_test
+@pytest.mark.windows_whitelisted
 class GemModuleTest(ModuleCase):
     """
     Validate gem module

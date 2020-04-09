@@ -13,6 +13,7 @@ import salt.utils.stringutils
 from tests.support.case import ModuleCase
 
 
+@pytest.mark.windows_whitelisted
 class PyDSLRendererIncludeTestCase(ModuleCase):
     def setUp(self):
         self.directory_created = False
