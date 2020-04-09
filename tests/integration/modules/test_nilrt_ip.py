@@ -5,16 +5,18 @@ integration tests for nilirt_ip
 
 from __future__ import absolute_import, print_function, unicode_literals
 
+import shutil
 import time
 
 import pytest
-import salt.utils.platform
 from tests.support.case import ModuleCase
-from tests.support.unit import skipIf
 
 
-@skipIf(not salt.utils.platform.is_linux(), "These tests can only be run on linux")
+@pytest.mark.destructive_test
 @pytest.mark.skip_if_not_root
+@pytest.mark.skipif(
+    'grains["os_family"] == "NILinuxRT"', reason="Tests applicable only to NILinuxRT"
+)
 class Nilrt_ipModuleTest(ModuleCase):
     """
     Validate the nilrt_ip module
@@ -24,40 +26,24 @@ class Nilrt_ipModuleTest(ModuleCase):
     def setUpClass(cls):
         cls.initialState = {}
 
+    @classmethod
+    def tearDownClass(cls):
+        cls.initialState = None
+
     def setUp(self):
         """
         Get current settings
         """
         # save files from var/lib/connman*
-        os_grain = self.run_function("grains.item", ["os_family"])
-        if os_grain["os_family"] != "NILinuxRT":
-            self.skipTest("Tests applicable only to NILinuxRT")
         super(Nilrt_ipModuleTest, self).setUp()
-        self.run_function(
-            "file.copy",
-            [
-                "/var/lib/connman",
-                "/tmp/connman",
-                "recurse=True",
-                "remove_existing=True",
-            ],
-        )
+        shutil.move("/var/lib/connman", "/tmp/connman")
 
     def tearDown(self):
         """
         Reset to original settings
         """
         # restore files
-        self.run_function(
-            "file.copy",
-            [
-                "/tmp/connman",
-                "/var/lib/connman",
-                "recurse=True",
-                "remove_existing=True",
-            ],
-        )
-        # restart connman
+        shutil.move("/tmp/connman", "/var/lib/connman")
         self.run_function("service.restart", ["connman"])
         time.sleep(10)  # wait 10 seconds for connman to be fully loaded
         interfaces = self.__interfaces()
@@ -73,7 +59,6 @@ class Nilrt_ipModuleTest(ModuleCase):
             interfaceList.append(iface["connectionid"])
         return interfaceList
 
-    @pytest.mark.destructive_test
     def test_down(self):
         interfaces = self.__interfaces()
         for interface in interfaces:
@@ -83,7 +68,6 @@ class Nilrt_ipModuleTest(ModuleCase):
         for interface in info["interfaces"]:
             self.assertFalse(self.__connected(interface))
 
-    @pytest.mark.destructive_test
     def test_up(self):
         interfaces = self.__interfaces()
         # first down all interfaces
@@ -97,7 +81,6 @@ class Nilrt_ipModuleTest(ModuleCase):
         for interface in info["interfaces"]:
             self.assertTrue(self.__connected(interface))
 
-    @pytest.mark.destructive_test
     def test_set_dhcp_linklocal_all(self):
         interfaces = self.__interfaces()
         for interface in interfaces:
@@ -107,7 +90,6 @@ class Nilrt_ipModuleTest(ModuleCase):
         for interface in info["interfaces"]:
             self.assertEqual(interface["ipv4"]["requestmode"], "dhcp_linklocal")
 
-    @pytest.mark.destructive_test
     def test_static_all(self):
         interfaces = self.__interfaces()
         for interface in interfaces:
