@@ -25,6 +25,7 @@ from datetime import datetime, timedelta
 
 from salt.ext import six
 from salt.ext.six.moves import cStringIO
+from saltfactories.utils.processes.helpers import terminate_process
 from tests.support.cli_scripts import ScriptPathMixin
 from tests.support.helpers import RedirectStdStreams, requires_sshd_server
 from tests.support.mixins import (
@@ -33,7 +34,6 @@ from tests.support.mixins import (
     SaltMultimasterClientTestCaseMixin,
 )
 from tests.support.paths import CODE_DIR, INTEGRATION_TEST_DIR, PYEXEC, SCRIPT_DIR
-from tests.support.processes import terminate_process
 from tests.support.runtests import RUNTIME_VARS
 from tests.support.unit import TestCase
 
