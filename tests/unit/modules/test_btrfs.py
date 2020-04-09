@@ -2,22 +2,17 @@
 """
     :codeauthor: Jayesh Kariya <jayeshk@saltstack.com>
 """
-# Import python libs
 from __future__ import absolute_import, print_function, unicode_literals
 
 import pytest
 import salt.modules.btrfs as btrfs
-
-# Import Salt Libs
 import salt.utils.files
 import salt.utils.fsutils
 import salt.utils.platform
 from salt.exceptions import CommandExecutionError
-
-# Import Salt Testing Libs
 from tests.support.mixins import LoaderModuleMockMixin
 from tests.support.mock import MagicMock, mock_open, patch
-from tests.support.unit import TestCase, skipIf
+from tests.support.unit import TestCase
 
 
 class BtrfsTestCase(TestCase, LoaderModuleMockMixin):
@@ -415,7 +410,7 @@ class BtrfsTestCase(TestCase, LoaderModuleMockMixin):
         subvolume_exists.return_value = True
         assert not btrfs.subvolume_create("var", dest="/mnt")
 
-    @skipIf(salt.utils.platform.is_windows(), "Skip on Windows")
+    @pytest.mark.skipif(salt.utils.platform.is_windows(), reason="Skip on Windows")
     @patch("salt.modules.btrfs.subvolume_exists")
     def test_subvolume_create(self, subvolume_exists):
         """
