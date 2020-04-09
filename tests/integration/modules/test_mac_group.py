@@ -3,22 +3,17 @@
     :codeauthor: Nicole Thomas <nicole@saltstack.com>
 """
 
-# Import Python Libs
 from __future__ import absolute_import, print_function, unicode_literals
 
 import random
 import string
 
-# Import Salt Libs
+import pytest
 from salt.exceptions import CommandExecutionError
 from salt.ext import six
-
-# Import 3rd-party libs
-from salt.ext.six.moves import range  # pylint: disable=import-error,redefined-builtin
-
-# Import Salt Testing Libs
+from salt.ext.six.moves import range
 from tests.support.case import ModuleCase
-from tests.support.helpers import destructiveTest, skip_if_not_root
+from tests.support.helpers import destructiveTest
 
 
 def __random_string(size=6):
@@ -39,7 +34,7 @@ REP_USER_GROUP = __random_string()
 
 
 @destructiveTest
-@skip_if_not_root
+@pytest.mark.skip_if_not_root
 class MacGroupModuleTest(ModuleCase):
     """
     Integration tests for the mac_group module

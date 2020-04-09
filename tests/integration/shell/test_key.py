@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-# Import Python libs
 from __future__ import absolute_import, print_function, unicode_literals
 
 import os
@@ -8,18 +7,14 @@ import shutil
 import tempfile
 import textwrap
 
-# Import Salt libs
+import pytest
 import salt.utils.files
 import salt.utils.platform
 import salt.utils.yaml
-
-# Import 3rd-party libs
 from salt.ext import six
 from tests.support.case import ShellCase
-from tests.support.helpers import destructiveTest, skip_if_not_root
+from tests.support.helpers import destructiveTest
 from tests.support.mixins import ShellCaseCommonTestsMixin
-
-# Import Salt Testing libs
 from tests.support.runtests import RUNTIME_VARS
 
 USERA = "saltdev"
@@ -204,7 +199,7 @@ class KeyTest(ShellCase, ShellCaseCommonTestsMixin):
         expect = ["Accepted Keys:", "minion", "sub_minion"]
         self.assertEqual(data, expect)
 
-    @skip_if_not_root
+    @pytest.mark.skip_if_not_root
     @destructiveTest
     def test_list_acc_eauth(self):
         """
@@ -218,7 +213,7 @@ class KeyTest(ShellCase, ShellCaseCommonTestsMixin):
         self.assertEqual(data, expect)
         self._remove_user()
 
-    @skip_if_not_root
+    @pytest.mark.skip_if_not_root
     @destructiveTest
     def test_list_acc_eauth_bad_creds(self):
         """

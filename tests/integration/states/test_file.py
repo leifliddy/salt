@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
-
 """
 Tests for the file state
 """
 
-# Import Python libs
 from __future__ import absolute_import, print_function, unicode_literals
 
 import errno
@@ -18,6 +16,7 @@ import sys
 import tempfile
 import textwrap
 
+import pytest
 import salt.serializers.configparser
 
 # Import Salt libs
@@ -27,17 +26,14 @@ import salt.utils.json
 import salt.utils.path
 import salt.utils.platform
 import salt.utils.stringutils
-
-# Import 3rd-party libs
 from salt.ext import six
-from salt.ext.six.moves import range  # pylint: disable=import-error,redefined-builtin
+from salt.ext.six.moves import range
 from salt.utils.versions import LooseVersion as _LooseVersion
 from tests.support.case import ModuleCase
 from tests.support.helpers import (
     Webserver,
     dedent,
     destructiveTest,
-    skip_if_not_root,
     with_system_user_and_group,
     with_tempdir,
     with_tempfile,
@@ -398,7 +394,7 @@ class FileTest(ModuleCase, SaltReturnAssertsMixin):
         check_file = self.run_function("file.file_exists", [file_pillar_def])
         self.assertTrue(check_file)
 
-    @skip_if_not_root
+    @pytest.mark.skip_if_not_root
     def test_managed_dir_mode(self):
         """
         Tests to ensure that file.managed creates directories with the
@@ -646,7 +642,7 @@ class FileTest(ModuleCase, SaltReturnAssertsMixin):
             last_line = fp_.read()
             self.assertEqual(contents, last_line)
 
-    @skip_if_not_root
+    @pytest.mark.skip_if_not_root
     @skipIf(IS_WINDOWS, 'Windows does not support "mode" kwarg. Skipping.')
     @skipIf(not salt.utils.path.which("visudo"), "sudo is missing")
     def test_managed_check_cmd(self):
@@ -1003,7 +999,7 @@ class FileTest(ModuleCase, SaltReturnAssertsMixin):
             if os.path.islink(sym_dir):
                 self.run_function("file.remove", [sym_dir])
 
-    @skip_if_not_root
+    @pytest.mark.skip_if_not_root
     @skipIf(IS_WINDOWS, "Mode not available in Windows")
     def test_directory_max_depth(self):
         """
@@ -2570,7 +2566,7 @@ class FileTest(ModuleCase, SaltReturnAssertsMixin):
             except OSError:
                 pass
 
-    @skip_if_not_root
+    @pytest.mark.skip_if_not_root
     @skipIf(not HAS_PWD, "pwd not available. Skipping test")
     @skipIf(not HAS_GRP, "grp not available. Skipping test")
     @with_system_user_and_group(
@@ -2611,7 +2607,7 @@ class FileTest(ModuleCase, SaltReturnAssertsMixin):
             root_group = self.run_function("user.primary_group", ["root"])
             self.assertEqual(grp.getgrgid(twostats.st_gid).gr_name, root_group)
 
-    @skip_if_not_root
+    @pytest.mark.skip_if_not_root
     @skipIf(not HAS_PWD, "pwd not available. Skipping test")
     @skipIf(not HAS_GRP, "grp not available. Skipping test")
     @with_system_user_and_group(
@@ -2747,7 +2743,7 @@ class FileTest(ModuleCase, SaltReturnAssertsMixin):
         ret = self.run_function("state.sls", mods=state_file)
         self.assertSaltTrueReturn(ret)
 
-    @skip_if_not_root
+    @pytest.mark.skip_if_not_root
     @skipIf(not HAS_PWD, "pwd not available. Skipping test")
     @skipIf(not HAS_GRP, "grp not available. Skipping test")
     @with_system_user_and_group(
@@ -2825,7 +2821,7 @@ class FileTest(ModuleCase, SaltReturnAssertsMixin):
         except OSError:
             pass
 
-    @skip_if_not_root
+    @pytest.mark.skip_if_not_root
     @skipIf(not HAS_PWD, "pwd not available. Skipping test")
     @skipIf(not HAS_GRP, "grp not available. Skipping test")
     @with_system_user_and_group(

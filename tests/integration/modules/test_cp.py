@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-# Import python libs
 from __future__ import absolute_import, print_function, unicode_literals
 
 import hashlib
@@ -15,23 +14,14 @@ import time
 import uuid
 
 import psutil
-
-# Import 3rd party libs
+import pytest
 import salt.ext.six as six
-
-# Import salt libs
 import salt.utils.files
 import salt.utils.path
 import salt.utils.platform
 import salt.utils.stringutils
-
-# Import Salt Testing libs
 from tests.support.case import ModuleCase
-from tests.support.helpers import (
-    get_unused_localhost_port,
-    skip_if_not_root,
-    with_tempfile,
-)
+from tests.support.helpers import get_unused_localhost_port, with_tempfile
 from tests.support.runtests import RUNTIME_VARS
 from tests.support.unit import skipIf
 
@@ -419,7 +409,7 @@ class CPModuleTest(ModuleCase):
             self.assertEqual(salt.utils.stringutils.to_unicode(cp_.read()), "foo")
 
     @skipIf(not salt.utils.path.which("nginx"), "nginx not installed")
-    @skip_if_not_root
+    @pytest.mark.skip_if_not_root
     def test_cache_remote_file(self):
         """
         cp.cache_file

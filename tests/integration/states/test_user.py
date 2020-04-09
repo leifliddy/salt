@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 """
 tests for user state
 user absent
@@ -7,23 +6,16 @@ user present
 user present with custom homedir
 """
 
-# Import Python libs
 from __future__ import absolute_import, print_function, unicode_literals
 
 import os
 import sys
 from random import randint
 
-# Import Salt libs
+import pytest
 import salt.utils.platform
-
-# Import Salt Testing libs
 from tests.support.case import ModuleCase
-from tests.support.helpers import (
-    destructiveTest,
-    requires_system_grains,
-    skip_if_not_root,
-)
+from tests.support.helpers import destructiveTest, requires_system_grains
 from tests.support.mixins import SaltReturnAssertsMixin
 from tests.support.unit import skipIf
 
@@ -50,7 +42,7 @@ else:
 
 
 @destructiveTest
-@skip_if_not_root
+@pytest.mark.skip_if_not_root
 class UserTest(ModuleCase, SaltReturnAssertsMixin):
     """
     test for user absent
@@ -297,7 +289,7 @@ class UserTest(ModuleCase, SaltReturnAssertsMixin):
 
 
 @destructiveTest
-@skip_if_not_root
+@pytest.mark.skip_if_not_root
 @skipIf(not salt.utils.platform.is_windows(), "Windows only tests")
 class WinUserTest(ModuleCase, SaltReturnAssertsMixin):
     """

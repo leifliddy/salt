@@ -3,21 +3,18 @@
 integration tests for mac_system
 """
 
-# Import python libs
 from __future__ import absolute_import, print_function, unicode_literals
 
 import logging
 import random
 import string
 
-# Import salt libs
+import pytest
 import salt.utils.path
 import salt.utils.platform
 from salt.ext.six.moves import range
-
-# Import Salt Testing libs
 from tests.support.case import ModuleCase
-from tests.support.helpers import destructiveTest, flaky, skip_if_not_root
+from tests.support.helpers import destructiveTest, flaky
 from tests.support.unit import skipIf
 
 log = logging.getLogger(__name__)
@@ -36,7 +33,7 @@ SET_COMPUTER_NAME = __random_string()
 SET_SUBNET_NAME = __random_string()
 
 
-@skip_if_not_root
+@pytest.mark.skip_if_not_root
 @flaky(attempts=10)
 @skipIf(not salt.utils.platform.is_darwin(), "Test only available on macOS")
 @skipIf(
@@ -246,8 +243,8 @@ class MacSystemModuleTest(ModuleCase):
         )
 
 
-@skip_if_not_root
 @skipIf(not salt.utils.platform.is_darwin(), "Test only available on macOS")
+@pytest.mark.skip_if_not_root
 class MacSystemComputerNameTest(ModuleCase):
     def setUp(self):
         self.COMPUTER_NAME = self.run_function("system.get_computer_name")

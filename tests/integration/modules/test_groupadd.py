@@ -1,29 +1,25 @@
 # -*- coding: utf-8 -*-
 
-# Import python libs
 from __future__ import absolute_import, print_function, unicode_literals
 
 import random
 import string
 
+import pytest
 import salt.utils.files
 import salt.utils.platform
 import salt.utils.stringutils
-
-# Import Salt libs
 from salt.ext import six
 from salt.ext.six.moves import range
-
-# Import Salt Testing libs
 from tests.support.case import ModuleCase
-from tests.support.helpers import destructiveTest, skip_if_not_root
+from tests.support.helpers import destructiveTest
 from tests.support.unit import skipIf
 
 if not salt.utils.platform.is_windows():
     import grp
 
 
-@skip_if_not_root
+@pytest.mark.skip_if_not_root
 @destructiveTest
 class GroupModuleTest(ModuleCase):
     """

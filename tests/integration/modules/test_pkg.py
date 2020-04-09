@@ -1,17 +1,14 @@
 # -*- coding: utf-8 -*-
 
-# Import Python libs
 from __future__ import absolute_import, print_function, unicode_literals
 
 import os
 import pprint
 
-# Import Salt libs
+import pytest
 import salt.utils.path
 import salt.utils.pkg
 import salt.utils.platform
-
-# Import Salt Testing libs
 from tests.support.case import ModuleCase
 from tests.support.helpers import (
     destructiveTest,
@@ -19,7 +16,6 @@ from tests.support.helpers import (
     requires_salt_modules,
     requires_salt_states,
     requires_system_grains,
-    skip_if_not_root,
 )
 from tests.support.mixins import SaltReturnAssertsMixin
 from tests.support.unit import skipIf
@@ -40,7 +36,7 @@ class PkgModuleTest(ModuleCase, SaltReturnAssertsMixin):
         elif grains["os_family"] == "RedHat":
             cls.pkg = "units"
 
-    @skip_if_not_root
+    @pytest.mark.skip_if_not_root
     @requires_salt_modules("pkg.refresh_db")
     def setUp(self):
         if "refresh" not in self.ctx:

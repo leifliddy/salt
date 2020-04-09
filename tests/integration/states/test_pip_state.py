@@ -7,7 +7,6 @@
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 """
 
-# Import python libs
 from __future__ import absolute_import, print_function, unicode_literals
 
 import errno
@@ -17,7 +16,7 @@ import pprint
 import shutil
 import sys
 
-# Import salt libs
+import pytest
 import salt.utils.files
 import salt.utils.path
 import salt.utils.platform
@@ -26,18 +25,13 @@ import salt.utils.win_dacl
 import salt.utils.win_functions
 import salt.utils.win_runas
 from salt.exceptions import CommandExecutionError
-
-# Import 3rd-party libs
 from salt.ext import six
 from salt.modules.virtualenv_mod import KNOWN_BINARY_NAMES
-
-# Import Salt Testing libs
 from tests.support.case import ModuleCase
 from tests.support.helpers import (
     destructiveTest,
     patched_environ,
     requires_system_grains,
-    skip_if_not_root,
     with_system_user,
     with_tempdir,
 )
@@ -289,7 +283,7 @@ class PipStateTest(ModuleCase, SaltReturnAssertsMixin):
                 )
 
     @destructiveTest
-    @skip_if_not_root
+    @pytest.mark.skip_if_not_root
     @with_system_user(
         "issue-6912", on_existing="delete", delete=True, password="PassWord1!"
     )
@@ -340,7 +334,7 @@ class PipStateTest(ModuleCase, SaltReturnAssertsMixin):
                     self.assertEqual(salt.utils.win_dacl.get_owner(path), username)
 
     @destructiveTest
-    @skip_if_not_root
+    @pytest.mark.skip_if_not_root
     @skipIf(salt.utils.platform.is_darwin(), "Test is flaky on macosx")
     @with_system_user(
         "issue-6912", on_existing="delete", delete=True, password="PassWord1!"

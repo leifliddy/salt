@@ -3,26 +3,19 @@
     :codeauthor: Nicole Thomas <nicole@saltstack.com>
 """
 
-# Import Python Libs
 from __future__ import absolute_import, print_function, unicode_literals
 
 import os
 import random
 import string
 
+import pytest
 import salt.ext.six as six
-import salt.ext.six as six
-
-# Import Salt Libs
 import salt.utils.files
 from salt.exceptions import CommandExecutionError
-
-# Import 3rd-party libs
-from salt.ext.six.moves import range  # pylint: disable=import-error,redefined-builtin
-
-# Import Salt Testing Libs
+from salt.ext.six.moves import range
 from tests.support.case import ModuleCase
-from tests.support.helpers import destructiveTest, skip_if_not_root
+from tests.support.helpers import destructiveTest
 
 
 def __random_string(size=6):
@@ -42,7 +35,7 @@ CHANGE_USER = __random_string()
 
 
 @destructiveTest
-@skip_if_not_root
+@pytest.mark.skip_if_not_root
 class MacUserModuleTest(ModuleCase):
     """
     Integration tests for the mac_user module

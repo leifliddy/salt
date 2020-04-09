@@ -3,27 +3,23 @@
 integration tests for shadow linux
 """
 
-# Import Python libs
 from __future__ import absolute_import, print_function, unicode_literals
 
 import os
 import random
 import string
 
+import pytest
 import salt.modules.shadow
-
-# Import Salt libs
 import salt.utils.files
 import salt.utils.platform
 from salt.ext.six.moves import range
-
-# Import Salt Testing libs
 from tests.support.case import ModuleCase
-from tests.support.helpers import destructiveTest, flaky, skip_if_not_root
+from tests.support.helpers import destructiveTest, flaky
 from tests.support.unit import skipIf
 
 
-@skip_if_not_root
+@pytest.mark.skip_if_not_root
 @skipIf(not salt.utils.platform.is_linux(), "These tests can only be run on linux")
 class ShadowModuleTest(ModuleCase):
     """

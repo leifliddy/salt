@@ -5,18 +5,15 @@
     tests.integration.modules.pw_user
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 """
-# Import python libs
 from __future__ import absolute_import, print_function, unicode_literals
 
 import random
 import string
 
-# Import 3rd-party libs
-from salt.ext.six.moves import range  # pylint: disable=import-error,redefined-builtin
-
-# Import Salt Testing libs
+import pytest
+from salt.ext.six.moves import range
 from tests.support.case import ModuleCase
-from tests.support.helpers import destructiveTest, skip_if_not_root
+from tests.support.helpers import destructiveTest
 
 
 class PwUserModuleTest(ModuleCase):
@@ -32,7 +29,7 @@ class PwUserModuleTest(ModuleCase):
         )
 
     @destructiveTest
-    @skip_if_not_root
+    @pytest.mark.skip_if_not_root
     def test_groups_includes_primary(self):
         # Let's create a user, which usually creates the group matching the
         # name

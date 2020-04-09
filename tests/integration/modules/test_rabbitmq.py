@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 
-# Import python libs
 from __future__ import absolute_import, print_function, unicode_literals
 
-# Import Salt Testing libs
+import pytest
 from tests.support.case import ModuleCase
-from tests.support.helpers import requires_salt_modules, skip_if_not_root
+from tests.support.helpers import requires_salt_modules
 
 
-@skip_if_not_root
+@pytest.mark.skip_if_not_root
 @requires_salt_modules("rabbitmq")
 class RabbitModuleTest(ModuleCase):
     """

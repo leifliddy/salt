@@ -1,30 +1,21 @@
 # -*- coding: utf-8 -*-
 
-# Import Python libs
 from __future__ import absolute_import, print_function, unicode_literals
 
 import random
 import string
 
-# Import Salt libs
+import pytest
 import salt.utils.platform
-
-# Import 3rd-party libs
-from salt.ext.six.moves import range  # pylint: disable=import-error,redefined-builtin
-
-# Import Salt Testing libs
+from salt.ext.six.moves import range
 from tests.support.case import ModuleCase
-from tests.support.helpers import (
-    destructiveTest,
-    requires_system_grains,
-    skip_if_not_root,
-)
+from tests.support.helpers import destructiveTest, requires_system_grains
 from tests.support.unit import skipIf
 
 
 @destructiveTest
 @skipIf(not salt.utils.platform.is_linux(), "These tests can only be run on linux")
-@skip_if_not_root
+@pytest.mark.skip_if_not_root
 class UseraddModuleTestLinux(ModuleCase):
     def setUp(self):
         super(UseraddModuleTestLinux, self).setUp()
@@ -104,7 +95,7 @@ class UseraddModuleTestLinux(ModuleCase):
 
 @destructiveTest
 @skipIf(not salt.utils.platform.is_windows(), "These tests can only be run on Windows")
-@skip_if_not_root
+@pytest.mark.skip_if_not_root
 class UseraddModuleTestWindows(ModuleCase):
     def __random_string(self, size=6):
         return "RS-" + "".join(

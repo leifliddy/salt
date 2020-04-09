@@ -3,19 +3,14 @@
     :codeauthor: Erik Johnson <erik@saltstack.com>
 """
 
-# Import Pytohn libs
 from __future__ import absolute_import, print_function, unicode_literals
 
-# Import Salt Testing libs
+import pytest
 import salt.utils.platform
-
-# Import 3rd-party libs
 from salt.ext import six
-from tests.support.helpers import skip_if_not_root
 from tests.support.mixins import LoaderModuleMockMixin
 from tests.support.unit import TestCase, skipIf
 
-# Import salt libs
 try:
     import salt.modules.shadow as shadow
 
@@ -59,7 +54,7 @@ class LinuxShadowTest(TestCase, LoaderModuleMockMixin):
                 hash_info["pw_hash"],
             )
 
-    @skip_if_not_root
+    @pytest.mark.skip_if_not_root
     def test_list_users(self):
         """
         Test if it returns a list of all users
